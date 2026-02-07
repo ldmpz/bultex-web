@@ -78,6 +78,7 @@ export default function ProductFormPage() {
             if (uploadError) throw uploadError;
 
             const { data } = supabase.storage.from('products').getPublicUrl(filePath);
+            console.log("Generated Image URL:", data.publicUrl);
             setImageUrl(data.publicUrl);
         } catch (error: any) {
             alert("Error subiendo imagen: " + error.message);
@@ -138,7 +139,7 @@ export default function ProductFormPage() {
                     <div className="flex items-center gap-4">
                         <div className="relative h-24 w-24 rounded-lg border bg-gray-50 overflow-hidden flex items-center justify-center">
                             {imageUrl ? (
-                                <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                                <img src={imageUrl} alt="Preview" className="h-full w-full object-cover" />
                             ) : (
                                 <Upload className="h-8 w-8 text-gray-300" />
                             )}
