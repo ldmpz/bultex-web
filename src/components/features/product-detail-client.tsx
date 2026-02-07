@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, MessageCircle, ArrowLeft, Truck, ShieldCheck } from "lucide-react";
+import { useConfig } from "@/context/config-context";
 import Link from "next/link";
 import { Product } from "@/types";
 
@@ -11,6 +12,9 @@ interface ProductDetailClientProps {
 }
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
+    const { whatsappNumber } = useConfig();
+    const finalNumber = whatsappNumber || "525512345678";
+
     return (
         <div className="container px-4 py-12 md:px-6">
             <Link href="/catalogo" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
@@ -79,7 +83,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                         )}
 
                         <a
-                            href={`https://wa.me/525512345678?text=Hola, me interesa cotizar mayoreo del producto: ${product.name} (ID: ${product.id})`}
+                            href={`https://wa.me/${finalNumber}?text=Hola, me interesa cotizar mayoreo del producto: ${product.name} (ID: ${product.id})`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-full"

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ShoppingBag, MessageCircle } from "lucide-react";
+import { useConfig } from "@/context/config-context";
 
 export interface Product {
     id: string;
@@ -21,6 +22,9 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+    const { whatsappNumber } = useConfig();
+    const finalNumber = whatsappNumber || "525512345678";
+
     return (
         <motion.div
             className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-lg"
@@ -68,8 +72,9 @@ export function ProductCard({ product }: ProductCardProps) {
                             </Button>
                         </a>
                     )}
+
                     <a
-                        href={`https://wa.me/525512345678?text=Hola, me interesa mayoreo del producto: ${product.name}`}
+                        href={`https://wa.me/${finalNumber}?text=Hola, me interesa mayoreo del producto: ${product.name}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={product.mlLink ? "w-full" : "col-span-2"}

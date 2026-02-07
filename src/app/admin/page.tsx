@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ShieldAlert } from "lucide-react";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -19,13 +19,17 @@ export default function LoginPage() {
         setLoading(true);
         setError(null);
 
+        // Append domain for Supabase Auth
+        const email = `${username.toLowerCase().trim()}@bultex.local`;
+
         const { error } = await supabase.auth.signInWithPassword({
             email,
             password,
         });
 
         if (error) {
-            setError(error.message);
+            console.error("Login error:", error);
+            setError(error.message); // Show real error for debugging
             setLoading(false);
         } else {
             router.push("/admin/dashboard");
@@ -51,16 +55,16 @@ export default function LoginPage() {
                 <form className="mt-8 space-y-6" onSubmit={handleLogin}>
                     <div className="space-y-4">
                         <div>
-                            <label htmlFor="email" className="sr-only">Correo Electrónico</label>
+                            <label htmlFor="username" className="sr-only">Usuario</label>
                             <Input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autoComplete="email"
+                                id="username"
+                                name="username"
+                                type="text"
+                                autoComplete="username"
                                 required
-                                placeholder="admin@bultex.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Usuario (ej. admin)"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 className="h-12"
                             />
                         </div>
