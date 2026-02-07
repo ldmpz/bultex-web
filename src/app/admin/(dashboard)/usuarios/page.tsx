@@ -35,12 +35,14 @@ export default function UsersPage() {
 
     const fetchUsers = async () => {
         try {
+            console.log('[fetchUsers] Starting to fetch users...');
             setLoading(true);
             const data = await getUsers();
+            console.log('[fetchUsers] Received data:', data);
             setUsers(data as User[]);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-            alert("Error al cargar usuarios");
+        } catch (error: any) {
+            console.error("[fetchUsers] Error:", error);
+            alert(`Error al cargar usuarios: ${error.message || 'Error desconocido'}`);
         } finally {
             setLoading(false);
         }
@@ -55,13 +57,15 @@ export default function UsersPage() {
         setLoadingInvite(true);
 
         try {
+            console.log('[handleInvite] Creating user:', inviteUsername);
             await createUser(inviteUsername, invitePassword);
             alert("Usuario creado exitosamente.");
             setInviteUsername("");
             setInvitePassword("");
             fetchUsers(); // Refresh list
         } catch (error: any) {
-            alert("Error al crear usuario: " + error.message);
+            console.error('[handleInvite] Error:', error);
+            alert(`Error al crear usuario: ${error.message || 'Error desconocido'}`);
         } finally {
             setLoadingInvite(false);
         }

@@ -4,14 +4,22 @@ import { supabaseAdmin } from "@/lib/supabase-admin"
 import { revalidatePath } from "next/cache"
 
 export async function getUsers() {
-    const { data: { users }, error } = await supabaseAdmin.auth.admin.listUsers()
+    try {
+        console.log('[getUsers] Fetching users from Supabase...')
+        const { data: { users }, error } = await supabaseAdmin.auth.admin.listUsers()
 
-    if (error) {
-        throw new Error(error.message)
+        if (error) {
+            console.error('[getUsers] Supabase error:', error)
+            throw new Error(error.message)
+        }
+
+        console.log(`[getUsers] Successfully fetched ${users.length} users`)
+        // Sort by created_at desc
+        return users.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    } catch (error) {
+        console.error('[getUsers] Unexpected error:', error)
+        throw error
     }
-
-    // Sort by created_at desc
-    return users.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 }
 
 export async function toggleUserStatus(userId: string, isBanned: boolean) {
@@ -46,32 +54,49 @@ export async function updateUserPassword(userId: string, newPassword: string) {
 }
 
 export async function createUser(username: string, password: string) {
-    const email = `${username}@bultex.local`;
+    try {
+        console.log('[createUser] Starting user creation for username:', username)
+        const email = `${username}@bultex.local`;
 
-    // Check if user already exists
-    const { data: list } = await supabaseAdmin.auth.admin.listUsers();
-    const existing = list.users.find(u => u.email === email);
+        // Check if user already exists
+        console.log('[createUser] Checking if user already exists...')
+        const { data: list, error: listError } = await supabaseAdmin.auth.admin.listUsers();
 
-    if (existing) {
-        throw new Error("El usuario ya existe.");
-    }
-
-    const { data, error } = await supabaseAdmin.auth.admin.createUser({
-        email,
-        password,
-        email_confirm: true, // Auto-confirm to skip email sending
-        user_metadata: {
-            username,
-            role: 'admin'
+        if (listError) {
+            console.error('[createUser] Error listing users:', listError)
+            throw new Error(`Error al verificar usuarios existentes: ${listError.message}`)
         }
-    });
 
-    if (error) {
-        throw new Error(error.message);
+        const existing = list.users.find(u => u.email === email);
+
+        if (existing) {
+            console.log('[createUser] User already exists:', email)
+            throw new Error("El usuario ya existe.");
+        }
+
+        console.log('[createUser] Creating new user with email:', email)
+        const { data, error } = await supabaseAdmin.auth.admin.createUser({
+            email,
+            password,
+            email_confirm: true, // Auto-confirm to skip email sending
+            user_metadata: {
+                username,
+                role: 'admin'
+            }
+        });
+
+        if (error) {
+            console.error('[createUser] Supabase error creating user:', error)
+            throw new Error(error.message);
+        }
+
+        console.log('[createUser] User created successfully:', data.user.id)
+        revalidatePath('/admin/usuarios');
+        return { success: true, user: data.user };
+    } catch (error) {
+        console.error('[createUser] Unexpected error:', error)
+        throw error
     }
-
-    revalidatePath('/admin/usuarios');
-    return { success: true, user: data.user };
 }
 
 export async function deleteUser(userId: string) {
