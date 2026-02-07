@@ -2,6 +2,7 @@
 
 import { ShieldCheck, Palette, Truck, Award } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const features = [
     {
@@ -69,11 +70,14 @@ export function Features() {
                     className="relative aspect-video overflow-hidden rounded-xl border bg-muted shadow-xl"
                 >
                     {/* Placeholder for Feature Image */}
-                    <img
-                        src="https://images.unsplash.com/photo-1576633587382-13ddf37b1fc1?q=80&w=2072&auto=format&fit=crop"
-                        alt="Taller de confección"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    <div className="relative w-full h-full">
+                        <Image
+                            src="https://images.unsplash.com/photo-1576633587382-13ddf37b1fc1?q=80&w=2072&auto=format&fit=crop"
+                            alt="Taller de confección"
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                    </div>
                 </motion.div>
             </div>
         </section>

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export function Hero() {
@@ -56,11 +57,13 @@ export function Hero() {
                     >
                         {/* Visual Element / Product Highlight */}
                         <div className="aspect-square overflow-hidden rounded-xl border bg-muted/50 shadow-2xl w-full max-w-[500px] h-[400px] md:h-[500px]">
-                            {/* Placeholder Image */}
-                            <img
+                            {/* Placeholder for Hero Image */}
+                            <Image
                                 src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop"
                                 alt="Hero Product"
-                                className="h-full w-full object-cover"
+                                fill
+                                className="object-cover"
+                                priority
                             />
                         </div>
                     </motion.div>
