@@ -12,7 +12,7 @@ type User = {
     email?: string;
     created_at: string;
     last_sign_in_at?: string;
-    ban_duration?: string;
+    banned_until?: string | null;
     user_metadata?: {
         username?: string;
     };
@@ -72,7 +72,7 @@ export default function UsersPage() {
     };
 
     const handleToggleStatus = async (user: User) => {
-        const isBanned = !!user.ban_duration && user.ban_duration !== 'none';
+        const isBanned = !!user.banned_until && new Date(user.banned_until) > new Date();
         const action = isBanned ? "activar" : "desactivar";
 
         if (!confirm(`¿Estás seguro de ${action} a este usuario?`)) return;
@@ -191,7 +191,7 @@ export default function UsersPage() {
                                 </tr>
                             ) : (
                                 filteredUsers.map((user) => {
-                                    const isBanned = !!user.ban_duration && user.ban_duration !== 'none';
+                                    const isBanned = !!user.banned_until && new Date(user.banned_until) > new Date();
                                     return (
                                         <tr key={user.id} className="hover:bg-gray-50">
                                             <td className="px-6 py-3 font-medium">{getUsername(user)}</td>

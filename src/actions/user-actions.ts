@@ -58,21 +58,9 @@ export async function createUser(username: string, password: string) {
         console.log('[createUser] Starting user creation for username:', username)
         const email = `${username}@bultex.local`;
 
-        // Check if user already exists
-        console.log('[createUser] Checking if user already exists...')
-        const { data: list, error: listError } = await supabaseAdmin.auth.admin.listUsers();
 
-        if (listError) {
-            console.error('[createUser] Error listing users:', listError)
-            throw new Error(`Error al verificar usuarios existentes: ${listError.message}`)
-        }
-
-        const existing = list.users.find(u => u.email === email);
-
-        if (existing) {
-            console.log('[createUser] User already exists:', email)
-            throw new Error("El usuario ya existe.");
-        }
+        // Removed manual check for existing user to avoid pagination issues.
+        // We will rely on supabaseAdmin.auth.admin.createUser returning an error if email exists.
 
         console.log('[createUser] Creating new user with email:', email)
         const { data, error } = await supabaseAdmin.auth.admin.createUser({

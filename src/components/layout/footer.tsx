@@ -1,65 +1,72 @@
 import Link from "next/link";
-import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
 
 export function Footer() {
     return (
-        <footer className="w-full border-t bg-background">
-            <div className="container py-12 px-4 md:px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <footer className="w-full bg-slate-950 text-slate-400 border-t border-slate-900">
+            <div className="container py-16 px-4 md:px-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
                     {/* Brand */}
                     <div className="space-y-4">
-                        <h3 className="text-xl font-bold tracking-tighter">BULTEX</h3>
-                        <p className="text-sm text-muted-foreground">
-                            Uniformes industriales de alta calidad para empresas exigentes.
-                            Diseñamos durabilidad y estilo.
+                        <h3 className="text-2xl font-black tracking-tighter text-white">BULTEX</h3>
+                        <p className="text-sm leading-relaxed">
+                            Líderes en confección de uniformes industriales de alta resistencia.
+                            Ingeniería textil aplicada a la seguridad y productividad de tu empresa.
                         </p>
                     </div>
 
                     {/* Links */}
                     <div className="space-y-4">
-                        <h4 className="text-sm font-semibold">Enlaces Rápidos</h4>
-                        <nav className="flex flex-col gap-2">
-                            <Link href="/catalogo" className="text-sm text-muted-foreground hover:text-primary transition-colors">Catálogo</Link>
-                            <Link href="/nosotros" className="text-sm text-muted-foreground hover:text-primary transition-colors">Quiénes Somos</Link>
-                            <Link href="/contacto" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contacto</Link>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider">Navegación</h4>
+                        <nav className="flex flex-col gap-3">
+                            <Link href="/catalogo" className="text-sm hover:text-accent transition-colors">Catálogo Completo</Link>
+                            <Link href="/nosotros" className="text-sm hover:text-accent transition-colors">Nuestra Empresa</Link>
+                            <Link href="/contacto" className="text-sm hover:text-accent transition-colors">Solicitar Cotización</Link>
                         </nav>
                     </div>
 
                     {/* Contact */}
                     <div className="space-y-4">
-                        <h4 className="text-sm font-semibold">Contacto</h4>
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4" />
-                                <span>Calle Industrial 123, MX</span>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider">Contacto Industrial</h4>
+                        <div className="space-y-3 text-sm">
+                            <div className="flex items-start gap-3">
+                                <MapPin className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                                <span>Parque Industrial Benito Juárez, Querétaro, Qro. México to</span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <Phone className="h-4 w-4" />
-                                <span>+52 55 1234 5678</span>
+                            <div className="flex items-center gap-3">
+                                <Phone className="h-5 w-5 text-accent shrink-0" />
+                                <span>(55) 1234-5678</span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <Mail className="h-4 w-4" />
-                                <span>contacto@bultex.com</span>
+                            <div className="flex items-center gap-3">
+                                <Mail className="h-5 w-5 text-accent shrink-0" />
+                                <span>ventas@bultex.com</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Social */}
                     <div className="space-y-4">
-                        <h4 className="text-sm font-semibold">Síguenos</h4>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider">Síguenos</h4>
                         <div className="flex gap-4">
-                            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                                <Facebook className="h-5 w-5" />
+                            <Link href="#" className="hover:text-accent transition-colors">
+                                <Linkedin className="h-6 w-6" />
                             </Link>
-                            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                                <Instagram className="h-5 w-5" />
+                            <Link href="#" className="hover:text-accent transition-colors">
+                                <Facebook className="h-6 w-6" />
+                            </Link>
+                            <Link href="#" className="hover:text-accent transition-colors">
+                                <Instagram className="h-6 w-6" />
                             </Link>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-                    <p>&copy; {new Date().getFullYear()} BULTEX. Todos los derechos reservados.</p>
+                <div className="mt-16 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-600">
+                    <p>&copy; {new Date().getFullYear()} BULTEX Uniformes Industriales S.A. de C.V.</p>
+                    <div className="flex gap-6">
+                        <Link href="/privacidad" className="hover:text-slate-400">Aviso de Privacidad</Link>
+                        <Link href="/terminos" className="hover:text-slate-400">Términos y Condiciones</Link>
+                    </div>
                 </div>
             </div>
         </footer>
