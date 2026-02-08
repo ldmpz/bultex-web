@@ -2,19 +2,17 @@
 
 import { motion } from "framer-motion";
 
-const stats = [
-    { label: "Años de Experiencia", value: "+15" },
-    { label: "Empresas Atendidas", value: "+500" },
-    { label: "Prendas Entregadas", value: "+1M" },
-    { label: "Cobertura", value: "Nacional" },
-];
-
 export function Trust() {
     return (
-        <section className="bg-slate-900 py-16 text-white border-t border-slate-800">
+        <section className="bg-slate-900 py-12 border-y border-slate-800">
             <div className="container px-4 md:px-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {stats.map((stat, index) => (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center text-center">
+                    {[
+                        { val: "+10", label: "Años de Experiencia" },
+                        { val: "+500", label: "Empresas Atendidas" },
+                        { val: "100%", label: "Calidad Garantizada" },
+                        { val: "24/7", label: "Soporte Personalizado" },
+                    ].map((item, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
@@ -23,12 +21,8 @@ export function Trust() {
                             viewport={{ once: true }}
                             className="space-y-2"
                         >
-                            <div className="text-4xl md:text-5xl font-black text-accent tracking-tighter">
-                                {stat.value}
-                            </div>
-                            <div className="text-sm md:text-base text-slate-400 font-medium uppercase tracking-wider">
-                                {stat.label}
-                            </div>
+                            <h3 className="text-4xl font-black text-white">{item.val}</h3>
+                            <p className="text-sm font-medium text-slate-400 uppercase tracking-wider">{item.label}</p>
                         </motion.div>
                     ))}
                 </div>

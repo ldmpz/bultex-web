@@ -12,8 +12,8 @@ interface ProductDetailClientProps {
 }
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
-    const { whatsappNumber } = useConfig();
-    const finalNumber = whatsappNumber || "525512345678";
+    const { config } = useConfig();
+    const finalNumber = config.quote_whatsapp || "525512345678";
 
     return (
         <div className="container px-4 py-12 md:px-6">

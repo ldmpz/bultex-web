@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, Phone, Mail, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useConfig } from "@/context/config-context";
 
 const navItems = [
     { name: "Inicio", href: "/" },
@@ -14,8 +16,12 @@ const navItems = [
 ];
 
 export function Navbar() {
+    const { config } = useConfig();
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+
+    if (pathname?.startsWith("/admin")) return null;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,6 +30,9 @@ export function Navbar() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Format WhatsApp Link
+    const whatsappLink = `https://wa.me/${config.quote_whatsapp}?text=${encodeURIComponent(config.whatsapp_message)}`;
 
     return (
         <header className="fixed top-0 w-full z-50 transition-all duration-300">
@@ -36,11 +45,11 @@ export function Navbar() {
                     <div className="flex gap-6">
                         <div className="flex items-center gap-2">
                             <Phone className="h-3 w-3 text-accent" />
-                            <span className="font-medium tracking-wide">Venta Mayorista: (55) 1234-5678</span>
+                            <span className="font-medium tracking-wide">Venta Mayorista: {config.contact_phone || '(55) 1234-5678'}</span>
                         </div>
                         <div className="hidden sm:flex items-center gap-2">
                             <Mail className="h-3 w-3 text-accent" />
-                            <span className="font-medium tracking-wide">cotizaciones@bultex.com</span>
+                            <span className="font-medium tracking-wide">{config.contact_email || 'ventas@bultex.com'}</span>
                         </div>
                     </div>
                     <div className="hidden md:flex items-center gap-4">
@@ -62,7 +71,7 @@ export function Navbar() {
                         <div className="bg-primary text-primary-foreground p-1.5 rounded-sm">
                             <span className="text-xl font-black tracking-tighter group-hover:text-accent transition-colors">BX</span>
                         </div>
-                        <span className="text-xl font-bold tracking-tighter text-foreground">BULTEX</span>
+                        <span className="text-xl font-bold tracking-tighter text-foreground">{config.company_name || 'BULTEX'}</span>
                     </Link>
 
                     {/* Desktop Menu */}
@@ -77,10 +86,12 @@ export function Navbar() {
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
                             </Link>
                         ))}
-                        <Button className="font-bold tracking-wide rounded-sm shadow-md hover:shadow-lg transition-all active:scale-95 bg-accent text-accent-foreground hover:bg-accent/90">
-                            COTIZAR AHORA
-                            <ChevronRight className="ml-1 h-4 w-4" />
-                        </Button>
+                        <Link href={whatsappLink} target="_blank">
+                            <Button className="font-bold tracking-wide rounded-sm shadow-md hover:shadow-lg transition-all active:scale-95 bg-accent text-accent-foreground hover:bg-accent/90">
+                                COTIZAR AHORA
+                                <ChevronRight className="ml-1 h-4 w-4" />
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -106,9 +117,11 @@ export function Navbar() {
                                     {item.name}
                                 </Link>
                             ))}
-                            <Button className="w-full font-bold bg-accent text-accent-foreground mt-4" size="lg">
-                                COTIZAR AHORA
-                            </Button>
+                            <Link href={whatsappLink} target="_blank" className="w-full">
+                                <Button className="w-full font-bold bg-accent text-accent-foreground mt-4" size="lg">
+                                    COTIZAR AHORA
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 )}

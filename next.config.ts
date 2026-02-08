@@ -21,6 +21,22 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'hdprrfcrpnusijcfjgbi.supabase.co',
       },
+      {
+        protocol: 'https',
+        hostname: '**.facebook.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.fbcdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'compren.com.mx',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.compren.com.mx',
+      },
     ],
   },
 };

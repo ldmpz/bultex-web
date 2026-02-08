@@ -22,8 +22,8 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-    const { whatsappNumber } = useConfig();
-    const finalNumber = whatsappNumber || "525512345678";
+    const { config } = useConfig();
+    const finalNumber = config.quote_whatsapp || "525512345678";
 
     return (
         <motion.div
