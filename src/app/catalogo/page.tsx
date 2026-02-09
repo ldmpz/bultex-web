@@ -1,5 +1,6 @@
 import { CatalogClient } from "@/components/features/catalog-client";
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
     title: "Catálogo Completo | BULTEX",
@@ -15,7 +16,9 @@ export default function CatalogPage() {
                     Explora nuestra colección de uniformes industriales de alta calidad.
                 </p>
             </div>
-            <CatalogClient />
+            <Suspense fallback={<div className="flex justify-center py-20">Cargando catálogo...</div>}>
+                <CatalogClient />
+            </Suspense>
         </div>
     );
 }
