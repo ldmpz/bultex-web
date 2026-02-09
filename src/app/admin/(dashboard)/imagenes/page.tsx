@@ -115,7 +115,6 @@ export default function ImagesPage() {
                                 <SelectItem value="hero">Hero (Carrusel Principal)</SelectItem>
                                 <SelectItem value="hero-side">Hero (Lateral)</SelectItem>
                                 <SelectItem value="about">Nosotros</SelectItem>
-                                <SelectItem value="catalog">Catálogo Preview</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

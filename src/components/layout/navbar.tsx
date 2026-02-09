@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Mail, ChevronRight } from "lucide-react";
+import { Menu, X, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useConfig } from "@/context/config-context";
@@ -36,46 +36,28 @@ export function Navbar() {
 
     return (
         <header className="fixed top-0 w-full z-50 transition-all duration-300">
-            {/* Top Bar - Industrial Trust Indicators */}
-            <div className={cn(
-                "w-full bg-slate-900 text-slate-100 text-xs py-2 transition-all duration-300 overflow-hidden",
-                scrolled ? "h-0 opacity-0" : "h-auto opacity-100"
-            )}>
-                <div className="container flex justify-between items-center px-4 md:px-6">
-                    <div className="flex gap-6">
-                        <div className="flex items-center gap-2">
-                            <Phone className="h-3 w-3 text-accent" />
-                            <span className="font-medium tracking-wide">Venta Mayorista: {config.contact_phone || '(55) 1234-5678'}</span>
-                        </div>
-                        <div className="hidden sm:flex items-center gap-2">
-                            <Mail className="h-3 w-3 text-accent" />
-                            <span className="font-medium tracking-wide">{config.contact_email || 'ventas@bultex.com'}</span>
-                        </div>
-                    </div>
-                    <div className="hidden md:flex items-center gap-4">
-                        <span className="text-slate-400">Envíos a todo México</span>
-                    </div>
-                </div>
-            </div>
-
             {/* Main Navbar */}
             <nav className={cn(
                 "w-full border-b backdrop-blur-md transition-all duration-300",
                 scrolled
-                    ? "bg-background/95 border-border/40 py-2 shadow-md"
-                    : "bg-background/80 border-transparent py-4"
+                    ? "bg-background/95 border-border/40 py-1 shadow-md"
+                    : "bg-background/80 border-transparent py-2"
             )}>
                 <div className="container flex items-center justify-between px-4 md:px-6">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2 group">
-                        <div className="bg-primary text-primary-foreground p-1.5 rounded-sm">
-                            <span className="text-xl font-black tracking-tighter group-hover:text-accent transition-colors">BX</span>
+                    {/* Logo (Left) */}
+                    <Link href="/" className="flex items-center space-x-2 group shrink-0">
+                        <div className="relative w-14 h-14">
+                            {/* Assumes logo.png is in the public folder */}
+                            <img
+                                src="/logo.png"
+                                alt="BULTEX Logo"
+                                className="object-contain w-full h-full"
+                            />
                         </div>
-                        <span className="text-xl font-bold tracking-tighter text-foreground">{config.company_name || 'BULTEX'}</span>
                     </Link>
 
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex gap-8 items-center">
+                    {/* Desktop Menu (Centered) */}
+                    <div className="hidden md:flex flex-1 justify-center gap-8 items-center">
                         {navItems.map((item) => (
                             <Link
                                 key={item.href}
@@ -86,13 +68,32 @@ export function Navbar() {
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
                             </Link>
                         ))}
-                        <Link href={whatsappLink} target="_blank">
-                            <Button className="font-bold tracking-wide rounded-sm shadow-md hover:shadow-lg transition-all active:scale-95 bg-accent text-accent-foreground hover:bg-accent/90">
-                                COTIZAR AHORA
-                                <ChevronRight className="ml-1 h-4 w-4" />
-                            </Button>
-                        </Link>
                     </div>
+
+                    {/* Social Icons (Right) */}
+                    <div className="hidden md:flex items-center gap-4 shrink-0">
+                        {config.facebook_url && (
+                            <Link href={config.facebook_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                <Facebook className="h-5 w-5" />
+                            </Link>
+                        )}
+                        {config.instagram_url && (
+                            <Link href={config.instagram_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                <Instagram className="h-5 w-5" />
+                            </Link>
+                        )}
+                        {config.linkedin_url && (
+                            <Link href={config.linkedin_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                <Linkedin className="h-5 w-5" />
+                            </Link>
+                        )}
+                        {config.twitter_url && (
+                            <Link href={config.twitter_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                <Twitter className="h-5 w-5" />
+                            </Link>
+                        )}
+                    </div>
+
 
                     {/* Mobile Menu Button */}
                     <button
@@ -117,11 +118,24 @@ export function Navbar() {
                                     {item.name}
                                 </Link>
                             ))}
-                            <Link href={whatsappLink} target="_blank" className="w-full">
-                                <Button className="w-full font-bold bg-accent text-accent-foreground mt-4" size="lg">
-                                    COTIZAR AHORA
-                                </Button>
-                            </Link>
+                            {/* Mobile Socials */}
+                            <div className="flex gap-6 mt-4 justify-center">
+                                {config.facebook_url && (
+                                    <Link href={config.facebook_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                        <Facebook className="h-6 w-6" />
+                                    </Link>
+                                )}
+                                {config.instagram_url && (
+                                    <Link href={config.instagram_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                        <Instagram className="h-6 w-6" />
+                                    </Link>
+                                )}
+                                {config.linkedin_url && (
+                                    <Link href={config.linkedin_url} target="_blank" className="hover:text-accent transition-colors text-foreground/80">
+                                        <Linkedin className="h-6 w-6" />
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}

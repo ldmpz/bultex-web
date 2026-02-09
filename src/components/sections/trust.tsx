@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export function Trust() {
     return (
         <section className="bg-slate-900 py-12 border-y border-slate-800">
-            <div className="container px-4 md:px-6">
+            <div className="container px-4 md:px-6 mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center text-center">
                     {[
                         { val: "+10", label: "Años de Experiencia" },

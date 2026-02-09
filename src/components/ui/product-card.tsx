@@ -66,7 +66,10 @@ export function ProductCard({ product }: ProductCardProps) {
                     </Link>
                     {product.mlLink && (
                         <a href={product.mlLink} target="_blank" rel="noopener noreferrer" className="w-full">
-                            <Button variant="outline" className="w-full text-xs gap-1 px-2" size="sm">
+                            <Button
+                                className="w-full text-xs gap-1 px-2 bg-white text-slate-900 border border-slate-200 transition-colors shadow-sm hover:bg-[var(--button-cta)] hover:text-[var(--button-cta-foreground)] hover:border-transparent font-bold"
+                                size="sm"
+                            >
                                 <ShoppingBag className="h-3 w-3" />
                                 Comprar
                             </Button>

@@ -7,21 +7,50 @@ import { Filter, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { Category, Product } from "@/types";
 
+import { useSearchParams } from "next/navigation";
+
 export function CatalogClient() {
+    const searchParams = useSearchParams();
+    const categorySlug = searchParams.get('category');
+
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-
-            // Fetch Categories
+        const fetchCategories = async () => {
             const { data: cats } = await supabase.from('categories').select('*');
-            if (cats) setCategories(cats);
+            if (cats) {
+                setCategories(cats);
+            }
+        };
+        fetchCategories();
+    }, []);
 
-            // Fetch Products
+    // Sync URL slug with selected category
+    useEffect(() => {
+        if (categories.length > 0) {
+            if (categorySlug) {
+                const matchedCategory = categories.find(c => c.slug === categorySlug);
+                if (matchedCategory) {
+                    setSelectedCategory(matchedCategory.id);
+                } else {
+                    // Slug exists but no match found (or invalid) -> show all? or keep previous?
+                    // Safe default: Show all if slug is invalid
+                    setSelectedCategory(null);
+                }
+            } else {
+                // No slug in URL -> Show all
+                setSelectedCategory(null);
+            }
+        }
+    }, [categorySlug, categories]);
+
+    // Separate effect for products when category changes
+    useEffect(() => {
+        const fetchProducts = async () => {
+            setLoading(true);
             let query = supabase
                 .from('products')
                 .select('*, categories(name, slug)')
@@ -32,16 +61,13 @@ export function CatalogClient() {
             }
 
             const { data: prods } = await query;
-
             if (prods) {
-                // Cast the response to our Product type
                 setProducts(prods as unknown as Product[]);
             }
-
             setLoading(false);
         };
 
-        fetchData();
+        fetchProducts();
     }, [selectedCategory]);
 
     return (

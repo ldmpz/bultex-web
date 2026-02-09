@@ -13,12 +13,12 @@ export function Footer() {
 
     return (
         <footer className="w-full bg-slate-950 text-slate-400 border-t border-slate-900">
-            <div className="container py-16 px-4 md:px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div className="container py-16 px-4 md:px-6 mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-center">
                     {/* Brand */}
-                    <div className="space-y-4">
+                    <div className="space-y-4 flex flex-col items-center">
                         <h3 className="text-2xl font-black tracking-tighter text-white">{config.company_name}</h3>
-                        <p className="text-sm leading-relaxed">
+                        <p className="text-sm leading-relaxed max-w-xs mx-auto">
                             {config.company_description || 'Líderes en confección de uniformes industriales de alta resistencia. Ingeniería textil aplicada a la seguridad y productividad de tu empresa.'}
                         </p>
                     </div>
@@ -26,7 +26,7 @@ export function Footer() {
                     {/* Links */}
                     <div className="space-y-4">
                         <h4 className="text-sm font-bold text-white uppercase tracking-wider">Navegación</h4>
-                        <nav className="flex flex-col gap-3">
+                        <nav className="flex flex-col gap-3 items-center">
                             <Link href="/catalogo" className="text-sm hover:text-accent transition-colors">Catálogo Completo</Link>
                             <Link href="/nosotros" className="text-sm hover:text-accent transition-colors">Nuestra Empresa</Link>
                             <Link href="/contacto" className="text-sm hover:text-accent transition-colors">Solicitar Cotización</Link>
@@ -36,43 +36,43 @@ export function Footer() {
                     {/* Contact */}
                     <div className="space-y-4">
                         <h4 className="text-sm font-bold text-white uppercase tracking-wider">Contacto Industrial</h4>
-                        <div className="space-y-3 text-sm">
-                            <div className="flex items-start gap-3">
-                                <MapPin className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                        <div className="space-y-3 text-sm flex flex-col items-center">
+                            <div className="flex items-start gap-3 justify-center text-left max-w-[200px]">
+                                <MapPin className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
                                 <span>{config.address_text || 'Parque Industrial Benito Juárez, Querétaro, Qro. México'}</span>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Phone className="h-5 w-5 text-accent shrink-0" />
+                            <div className="flex items-center gap-3 justify-center">
+                                <Phone className="h-5 w-5 text-blue-400 shrink-0" />
                                 <span>{config.contact_phone || '(55) 1234-5678'}</span>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Mail className="h-5 w-5 text-accent shrink-0" />
+                            <div className="flex items-center gap-3 justify-center">
+                                <Mail className="h-5 w-5 text-blue-400 shrink-0" />
                                 <span>{config.contact_email || 'ventas@bultex.com'}</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Social */}
-                    <div className="space-y-4">
+                    <div className="space-y-4 flex flex-col items-center">
                         <h4 className="text-sm font-bold text-white uppercase tracking-wider">Síguenos</h4>
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 justify-center">
                             {config.facebook_url && (
-                                <Link href={config.facebook_url} target="_blank" className="hover:text-accent transition-colors">
+                                <Link href={config.facebook_url} target="_blank" className="hover:text-blue-400 transition-colors">
                                     <Facebook className="h-6 w-6" />
                                 </Link>
                             )}
                             {config.instagram_url && (
-                                <Link href={config.instagram_url} target="_blank" className="hover:text-accent transition-colors">
+                                <Link href={config.instagram_url} target="_blank" className="hover:text-blue-400 transition-colors">
                                     <Instagram className="h-6 w-6" />
                                 </Link>
                             )}
                             {config.linkedin_url && (
-                                <Link href={config.linkedin_url} target="_blank" className="hover:text-accent transition-colors">
+                                <Link href={config.linkedin_url} target="_blank" className="hover:text-blue-400 transition-colors">
                                     <Linkedin className="h-6 w-6" />
                                 </Link>
                             )}
                             {config.twitter_url && (
-                                <Link href={config.twitter_url} target="_blank" className="hover:text-accent transition-colors">
+                                <Link href={config.twitter_url} target="_blank" className="hover:text-blue-400 transition-colors">
                                     <Twitter className="h-6 w-6" />
                                 </Link>
                             )}

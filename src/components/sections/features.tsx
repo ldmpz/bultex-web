@@ -29,7 +29,7 @@ const features = [
 export function Features() {
     return (
         <section className="py-24 bg-slate-50">
-            <div className="container px-4 md:px-6">
+            <div className="container px-4 md:px-6 mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

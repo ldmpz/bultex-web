@@ -20,8 +20,8 @@ export default function CategoryFormPage() {
     const [name, setName] = useState("");
     const [slug, setSlug] = useState("");
     const [description, setDescription] = useState("");
-    // const [imageUrl, setImageUrl] = useState("");
-    // const [uploading, setUploading] = useState(false);
+    const [imageUrl, setImageUrl] = useState("");
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         const loadCategory = async () => {
@@ -36,19 +36,18 @@ export default function CategoryFormPage() {
                     setName(category.name);
                     setSlug(category.slug);
                     setDescription(category.description || "");
-                    // setImageUrl(category.image_url || "");
+                    setImageUrl(category.image_url || "");
                 }
             }
         };
         loadCategory();
     }, [isEditing, params.id]);
 
-    /*
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         try {
             setUploading(true);
             if (!e.target.files || e.target.files.length === 0) {
-                throw new Error("Selecciona una imagen");
+                return;
             }
 
             const file = e.target.files[0];
@@ -57,7 +56,7 @@ export default function CategoryFormPage() {
             const filePath = `${fileName}`;
 
             const { error: uploadError } = await supabase.storage
-                .from('categories') // Ensure bucket exists or use 'products' if no separate bucket
+                .from('categories')
                 .upload(filePath, file);
 
             if (uploadError) throw uploadError;
@@ -65,16 +64,11 @@ export default function CategoryFormPage() {
             const { data } = supabase.storage.from('categories').getPublicUrl(filePath);
             setImageUrl(data.publicUrl);
         } catch (error: any) {
-            // Fallback to storing in 'products' bucket if 'categories' doesn't exist?
-            // Actually assuming 'categories' bucket might not exist.
-            // Might need to create it or stick to public URL or creating a separate bucket.
-            // For now, I'll alert the error.
             alert("Error subiendo imagen: " + error.message);
         } finally {
             setUploading(false);
         }
     };
-    */
 
     // Auto-generate slug from name if empty
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +87,7 @@ export default function CategoryFormPage() {
             name,
             slug: slug || name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
             description,
-            // image_url: imageUrl,
+            image_url: imageUrl,
         };
 
         let error;
@@ -130,8 +124,6 @@ export default function CategoryFormPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl shadow-sm border">
                 {/* Image Upload */}
-                {/* Image Upload - Comented out requested by user */}
-                {/* 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Imagen de Categoría</label>
                     <div className="flex items-center gap-4">
@@ -143,6 +135,7 @@ export default function CategoryFormPage() {
                             )}
                         </div>
                         <div className="flex-1">
+                            {/* Hidden file input controlled by label or button could be better, but simple input works */}
                             <Input
                                 type="file"
                                 accept="image/*"
@@ -155,7 +148,7 @@ export default function CategoryFormPage() {
                         </div>
                     </div>
                 </div>
-                */}
+
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Nombre</label>

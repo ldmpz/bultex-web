@@ -44,16 +44,16 @@ export function Hero() {
                 </AnimatePresence>
             </div>
 
-            <div className="container relative z-10 px-4 md:px-6">
+            <div className="container relative z-10 px-4 md:px-6 mx-auto">
                 <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
                     {/* Content Column */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="flex flex-col justify-center space-y-6"
+                        className="flex flex-col justify-center space-y-6 text-center lg:text-left items-center lg:items-start"
                     >
-                        <div className="inline-flex items-center gap-2 rounded-sm bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent border border-accent/20 w-fit backdrop-blur-sm">
+                        <div className="inline-flex items-center gap-2 rounded-sm bg-accent/10 px-4 py-1.5 text-sm font-semibold text-white border border-accent/20 w-fit backdrop-blur-sm">
                             <Factory className="h-4 w-4" />
                             <span className="tracking-wide uppercase">{config.company_slogan || 'Ingeniería Textil Industrial'}</span>
                         </div>
@@ -69,9 +69,9 @@ export function Hero() {
                             {config.company_description || 'Equipa a tu personal con prendas de alta resistencia diseñadas para soportar las exigencias de la industria moderna. Durabilidad certificada y personalización total.'}
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                        <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full justify-center lg:justify-start">
                             <Link href="/contacto">
-                                <Button size="lg" className="h-14 px-8 text-base bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_0_20px_rgba(202,138,4,0.3)] hover:shadow-[0_0_30px_rgba(202,138,4,0.5)] transition-all transform hover:-translate-y-1">
+                                <Button size="lg" className="h-14 px-8 text-base bg-accent text-white hover:bg-accent/90 shadow-[0_0_20px_rgba(46,74,143,0.3)] hover:shadow-[0_0_30px_rgba(46,74,143,0.5)] transition-all transform hover:-translate-y-1">
                                     SOLICITAR COTIZACIÓN
                                     <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
@@ -84,17 +84,17 @@ export function Hero() {
                         </div>
 
                         {/* Trust Indicators */}
-                        <div className="pt-8 flex items-center gap-6 text-sm text-slate-400 border-t border-slate-800/50 mt-4">
+                        <div className="pt-8 flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-slate-400 border-t border-slate-800/50 mt-4 w-full">
                             <div className="flex items-center gap-2">
-                                <CheckCircle2 className="h-4 w-4 text-accent" />
+                                <CheckCircle2 className="h-4 w-4 text-blue-400" />
                                 <span>Envíos Nacionales</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <CheckCircle2 className="h-4 w-4 text-accent" />
+                                <CheckCircle2 className="h-4 w-4 text-blue-400" />
                                 <span>Precios de Mayorista</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <CheckCircle2 className="h-4 w-4 text-accent" />
+                                <CheckCircle2 className="h-4 w-4 text-blue-400" />
                                 <span>Garantía de Calidad</span>
                             </div>
                         </div>
@@ -105,46 +105,49 @@ export function Hero() {
                         initial={{ opacity: 0, scale: 0.95, y: 30 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                        className="relative mt-8 lg:mt-0"
+                        className="relative mt-8 lg:mt-0 flex justify-center lg:justify-end"
                     >
-                        <div className="relative z-10 rounded-sm overflow-hidden shadow-2xl border border-slate-800">
-                            {(() => {
-                                const sideImage = images.find(img => img.section === 'hero-side');
-                                const imageToUse = sideImage || {
-                                    url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
-                                    alt: "Industrial Worker"
-                                };
+                        <div className="relative w-full max-w-2xl">
+                            {/* Improved Decorative Background Elements */}
+                            <div className="absolute -top-6 -right-6 w-full h-full border-2 border-accent/30 rounded-sm -z-10 hidden lg:block" />
+                            <div className="absolute -bottom-6 -left-6 w-full h-full bg-accent/5 rounded-sm -z-10 hidden lg:block backdrop-blur-sm" />
 
-                                return (
-                                    <div className="block relative group overflow-hidden">
-                                        <Image
-                                            src={imageToUse.url}
-                                            alt={imageToUse.alt}
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
-                                            priority
-                                        />
-                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
-                                    </div>
-                                );
-                            })()}
+                            <div className="relative z-10 rounded-sm overflow-hidden shadow-2xl border border-slate-800 bg-slate-900">
+                                {(() => {
+                                    const sideImage = images.find(img => img.section === 'hero-side');
+                                    const imageToUse = sideImage || {
+                                        url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
+                                        alt: "Industrial Worker"
+                                    };
 
-                            {/* Overlay Card - MOVED TO BUTTON */}
-                            <div className="absolute bottom-6 right-6">
-                                <Link href={config.campaign_url || '/catalogo'}>
-                                    <Button className="font-bold tracking-wide rounded-sm shadow-xl bg-accent text-accent-foreground hover:bg-accent/90 hover:scale-105 transition-all">
-                                        VISUALIZAR CAMPAÑA
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </Button>
-                                </Link>
+                                    return (
+                                        <div className="block relative group overflow-hidden">
+                                            <Image
+                                                src={imageToUse.url}
+                                                alt={imageToUse.alt}
+                                                width={0}
+                                                height={0}
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+                                                style={{ width: '100%', height: 'auto' }}
+                                                priority
+                                            />
+                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                                        </div>
+                                    );
+                                })()}
+
+                                {/* Overlay Card - MOVED TO BUTTON */}
+                                <div className="absolute bottom-6 right-6">
+                                    <Link href={config.campaign_url || '/catalogo'}>
+                                        <Button className="font-bold tracking-wide rounded-sm shadow-xl bg-accent text-white hover:bg-accent/90 hover:scale-105 transition-all">
+                                            VISUALIZAR CAMPAÑA
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-
-                        {/* Decorative Background Element */}
-                        <div className="absolute -top-10 -right-10 w-full h-full border-2 border-accent/20 rounded-sm -z-10" />
-                        <div className="absolute -bottom-10 -left-10 w-full h-full bg-slate-800/20 rounded-sm -z-10" />
                     </motion.div>
                 </div>
             </div>

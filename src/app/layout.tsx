@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://bultex-web.vercel.app"),
   title: {
-    default: "BULTEX | Uniformes Industriales de Alta Calidad",
+    default: "BULTEX",
     template: "%s | BULTEX",
   },
   description: "Fabricación y venta de uniformes industriales, camisolas, pantalones y overoles. Calidad, durabilidad y personalización para tu empresa.",
@@ -49,6 +49,11 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 };
 

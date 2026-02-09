@@ -101,8 +101,8 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
                 setImages(imageData as SiteImage[]);
             }
 
-        } catch (error) {
-            console.error("Error fetching config:", error);
+        } catch (error: any) {
+            console.error("Error fetching config:", error.message || error);
         } finally {
             setIsLoading(false);
         }

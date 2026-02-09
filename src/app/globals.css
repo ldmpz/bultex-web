@@ -3,24 +3,24 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   /* Brand Colors */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
   /* UI Colors */
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -30,56 +30,85 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
   @keyframes accordion-down {
-    from { height: 0 }
-    to { height: var(--radix-accordion-content-height) }
+    from {
+      height: 0
+    }
+
+    to {
+      height: var(--radix-accordion-content-height)
+    }
   }
+
   @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height) }
-    to { height: 0 }
+    from {
+      height: var(--radix-accordion-content-height)
+    }
+
+    to {
+      height: 0
+    }
   }
 }
 
 /* Base Variables */
 :root {
   --background: #ffffff;
-  --foreground: #0f172a; /* Slate 900 */
+  --foreground: #0f172a;
+  /* Slate 900 */
 
   /* Navy Blue - Trust & Authority (Primary) */
-  --primary: #0f172a; /* Slate 900 - Deep Navy */
-  --primary-foreground: #f8fafc; /* Slate 50 */
+  --primary: #0f172a;
+  /* Slate 900 - Deep Navy */
+  --primary-foreground: #f8fafc;
+  /* Slate 50 */
 
   /* Steel Gray - Industry & Structure (Secondary) */
-  --secondary: #334155; /* Slate 700 */
+  --secondary: #334155;
+  /* Slate 700 */
   --secondary-foreground: #f8fafc;
 
   /* Industrial Gold/Orange - Visibility & Action (Accent) */
-  --accent: #ca8a04; /* Yellow 600 - Darker, more industrial gold */
-  --accent-foreground: #ffffff;
+  /* Industrial Blue - Visibility & Action (Accent) */
+  --accent: #2E4A8F;
+  /* BULTEX Blue */
+  /* Button CTA */
+  --button-cta: #FFE600;
+  /* Yellow */
+  --button-cta-foreground: #0f172a;
 
-  --muted: #f1f5f9; /* Slate 100 */
-  --muted-foreground: #64748b; /* Slate 500 */
+  --muted: #f1f5f9;
+  /* Slate 100 */
+  --muted-foreground: #64748b;
+  /* Slate 500 */
 
   --card: #ffffff;
   --card-foreground: #0f172a;
 
-  --border: #e2e8f0; /* Slate 200 */
+  --border: #e2e8f0;
+  /* Slate 200 */
   --input: #e2e8f0;
-  --ring: #0f172a; /* Match primary */
-  
-  --radius: 0.25rem; /* Sharper corners for industrial feel */
+  --ring: #0f172a;
+  /* Match primary */
+
+  --radius: 0.25rem;
+  /* Sharper corners for industrial feel */
 }
 
 .dark {
-  --background: #020617; /* Slate 950 */
-  --foreground: #f8fafc; /* Slate 50 */
+  --background: #020617;
+  /* Slate 950 */
+  --foreground: #f8fafc;
+  /* Slate 50 */
 
   --primary: #f8fafc;
   --primary-foreground: #0f172a;
 
-  --secondary: #1e293b; /* Slate 800 */
+  --secondary: #1e293b;
+  /* Slate 800 */
   --secondary-foreground: #f8fafc;
 
-  --accent: #eab308; /* Yellow 500 */
+  --accent: #eab308;
+  /* Yellow 500 */
   --accent-foreground: #020617;
 
   --muted: #1e293b;
@@ -97,8 +126,8 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
   }
 }
-

@@ -1,12 +1,11 @@
 import { Hero } from "@/components/sections/hero";
 import { Features } from "@/components/sections/features";
 import { CTA } from "@/components/sections/cta";
-import { CatalogPreview } from "@/components/sections/catalog-preview";
 import { Trust } from "@/components/sections/trust";
+import { CatalogPreview } from "@/components/sections/catalog-preview";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "BULTEX | Uniformes Industriales y Ropa de Trabajo",
   description: "Fabricante de uniformes industriales de alta durabilidad: camisolas, pantalones, overoles y calzado de seguridad. Venta mayorista para empresas.",
 };
 

@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '**.compren.com.mx',
       },
+      {
+        protocol: 'https',
+        hostname: 'desarrolladoresweb.org',
+      },
     ],
   },
 };

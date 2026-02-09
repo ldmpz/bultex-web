@@ -18,7 +18,7 @@ export function CTA() {
                 backgroundSize: "32px 32px"
             }}></div>
 
-            <div className="container relative z-10 px-4 md:px-6 text-center">
+            <div className="container relative z-10 px-4 md:px-6 text-center mx-auto">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -38,11 +38,7 @@ export function CTA() {
                                 Cotizar por WhatsApp
                             </Button>
                         </Link>
-                        <Link href="/contacto">
-                            <Button variant="outline" size="lg" className="h-14 px-8 text-base border-slate-600 text-white hover:bg-slate-800 hover:text-white">
-                                Formulario de Contacto
-                            </Button>
-                        </Link>
+
                     </div>
                 </motion.div>
             </div>

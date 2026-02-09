@@ -23,15 +23,41 @@ export function CatalogPreview() {
         const fetchCategories = async () => {
             try {
                 // Fetch top 4 categories
-                const { data, error } = await supabase
+                const { data: categoriesData, error } = await supabase
                     .from('categories')
                     .select('*')
                     .limit(4);
 
                 if (error) throw error;
-                if (data) setCategories(data);
-            } catch (error) {
-                console.error("Error fetching categories:", error);
+
+                if (categoriesData) {
+                    // Fetch one representative product image for each category
+                    const categoriesWithImages = await Promise.all(categoriesData.map(async (cat) => {
+                        // If category already has an image (manually uploaded), use it
+                        if (cat.image_url) {
+                            return cat;
+                        }
+
+                        const { data: products } = await supabase
+                            .from('products')
+                            .select('image_url')
+                            .eq('category_id', cat.id)
+                            .eq('is_active', true)
+                            .not('image_url', 'is', null) // Ensure we get a product with an image
+                            .limit(1);
+
+                        // Use product image if available, otherwise fallback to default
+                        const productImg = products?.[0]?.image_url;
+                        return {
+                            ...cat,
+                            image_url: productImg || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+                        };
+                    }));
+
+                    setCategories(categoriesWithImages);
+                }
+            } catch (error: any) {
+                console.error("Error fetching categories details:", error.message || error);
             } finally {
                 setLoading(false);
             }
@@ -66,17 +92,17 @@ export function CatalogPreview() {
     ];
 
     return (
-        <section className="container py-24 px-4 md:px-6 bg-slate-50">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                <div className="space-y-4">
+        <section className="container py-24 px-4 md:px-6 bg-slate-50 mx-auto">
+            <div className="flex flex-col items-center text-center mb-12 gap-6">
+                <div className="space-y-4 max-w-2xl">
                     <h2 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
                         Catálogo <span className="text-primary">Especializado</span>
                     </h2>
-                    <p className="text-slate-600 max-w-xl">
+                    <p className="text-slate-600">
                         Encuentra la indumentaria perfecta para cada área de tu empresa.
                     </p>
                 </div>
-                <Link href="/catalogo" className="hidden md:flex items-center text-primary font-bold hover:text-accent transition-colors group">
+                <Link href="/catalogo" className="inline-flex items-center text-primary font-bold hover:text-accent transition-colors group">
                     Ver Catálogo Completo
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -113,7 +139,7 @@ export function CatalogPreview() {
                                     </p>
                                 </div>
 
-                                <div className="absolute top-4 right-4 bg-accent text-accent-foreground p-2 rounded-full opacity-0 transform translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                                <div className="absolute top-4 right-4 bg-accent text-white p-2 rounded-full opacity-0 transform translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
                                     <ArrowRight className="h-5 w-5" />
                                 </div>
                             </Link>
