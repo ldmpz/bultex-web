@@ -46,11 +46,11 @@ export function CatalogPreview() {
                             .not('image_url', 'is', null) // Ensure we get a product with an image
                             .limit(1);
 
-                        // Use product image if available, otherwise fallback to default
+                        // Use product image if available, otherwise default to null (will show placeholder icon)
                         const productImg = products?.[0]?.image_url;
                         return {
                             ...cat,
-                            image_url: productImg || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+                            image_url: productImg || ""
                         };
                     }));
 
@@ -66,30 +66,12 @@ export function CatalogPreview() {
         fetchCategories();
     }, []);
 
-    // Fallback if no categories found
-    const displayCategories = categories.length > 0 ? categories : [
-        {
-            id: '1',
-            name: "Línea Industrial",
-            description: "Camisolas, Pantalones y Overoles.",
-            slug: "industrial",
-            image_url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop"
-        },
-        {
-            id: '2',
-            name: "Alta Visibilidad",
-            description: "Chalecos y prendas con reflejante.",
-            slug: "seguridad",
-            image_url: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=2069&auto=format&fit=crop"
-        },
-        {
-            id: '3',
-            name: "Calzado",
-            description: "Botas dieléctricas certificadas.",
-            slug: "calzado",
-            image_url: "https://images.unsplash.com/photo-1604177091072-c7a8ece634ba?q=80&w=2070&auto=format&fit=crop"
-        }
-    ];
+    // Fallback if no categories found - Just empty, don't show fake categories
+    const displayCategories = categories;
+
+    if (!loading && displayCategories.length === 0) {
+        return null; // Don't show the section if there are no categories
+    }
 
     return (
         <section className="container py-24 px-4 md:px-6 bg-slate-50 mx-auto">
@@ -102,7 +84,7 @@ export function CatalogPreview() {
                         Encuentra la indumentaria perfecta para cada área de tu empresa.
                     </p>
                 </div>
-                <Link href="/catalogo" className="inline-flex items-center text-primary font-bold hover:text-accent transition-colors group">
+                <Link href="/productos" className="inline-flex items-center text-primary font-bold hover:text-accent transition-colors group">
                     Ver Catálogo Completo
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -123,13 +105,21 @@ export function CatalogPreview() {
                             viewport={{ once: true }}
                             className={`group relative overflow-hidden rounded-sm h-[350px] shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-200 ${index === 0 && displayCategories.length % 3 !== 0 ? "md:col-span-2 lg:col-span-1" : ""}`}
                         >
-                            <Link href={`/catalogo?category=${category.slug}`} className="block w-full h-full">
-                                <Image
-                                    src={category.image_url || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"}
-                                    alt={category.name}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
+                            <Link href={`/productos?category=${category.slug}`} className="block w-full h-full bg-slate-100">
+                                {category.image_url ? (
+                                    <Image
+                                        src={category.image_url}
+                                        alt={category.name}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
+                                        <Loader2 className="h-12 w-12 mb-2 animate-pulse" />
+                                        {/* Using Loader2 as generic placeholder or maybe Package if available, sticking to safe imports */}
+                                        <span className="text-sm">Sin imagen</span>
+                                    </div>
+                                )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent" />
 
                                 <div className="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-500 group-hover:-translate-y-2">
@@ -149,7 +139,7 @@ export function CatalogPreview() {
             )}
 
             <div className="mt-8 text-center md:hidden">
-                <Link href="/catalogo" className="inline-flex items-center text-primary font-bold hover:text-accent transition-colors">
+                <Link href="/productos" className="inline-flex items-center text-primary font-bold hover:text-accent transition-colors">
                     Ver Catálogo Completo
                     <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

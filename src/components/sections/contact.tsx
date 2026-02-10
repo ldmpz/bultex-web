@@ -5,19 +5,63 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useConfig } from "@/context/config-context";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 export function ContactSection() {
     const { config } = useConfig();
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const formRef = useRef<HTMLFormElement>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Here we would typically send to an API
         setStatus("sending");
-        setTimeout(() => setStatus("success"), 1500);
+        setErrorMessage("");
+
+        if (!formRef.current) return;
+
+        const formData = new FormData(formRef.current);
+        const data = {
+            name: formData.get('name') as string,
+            email: formData.get('email') as string,
+            phone: formData.get('phone') as string,
+            message: formData.get('message') as string,
+        };
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Error al enviar el mensaje');
+            }
+
+            setStatus("success");
+            // Clear form using ref
+            formRef.current?.reset();
+
+            // Reset status after 5 seconds
+            setTimeout(() => setStatus("idle"), 5000);
+        } catch (error) {
+            setStatus("error");
+            setErrorMessage(error instanceof Error ? error.message : 'Error al enviar el mensaje');
+
+            // Reset error status after 5 seconds
+            setTimeout(() => {
+                setStatus("idle");
+                setErrorMessage("");
+            }, 5000);
+        }
     }
+
 
     return (
         <section className="container px-4 py-12 md:px-6">
@@ -88,27 +132,47 @@ export function ContactSection() {
                     viewport={{ once: true }}
                     className="bg-white border rounded-xl p-6 md:p-8 shadow-lg"
                 >
-                    <form className="space-y-4" onSubmit={handleSubmit}>
+                    <form ref={formRef} className="space-y-4" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <label htmlFor="name" className="text-sm font-bold text-slate-700">Nombre</label>
-                                <Input id="name" placeholder="Tu nombre" required className="bg-slate-50 border-slate-200" />
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    placeholder="Tu nombre"
+                                    required
+                                    className="bg-slate-50 border-slate-200"
+                                />
                             </div>
                             <div className="space-y-2">
                                 <label htmlFor="phone" className="text-sm font-bold text-slate-700">Teléfono</label>
-                                <Input id="phone" placeholder="10 dígitos" required className="bg-slate-50 border-slate-200" />
+                                <Input
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="10 dígitos"
+                                    required
+                                    className="bg-slate-50 border-slate-200"
+                                />
                             </div>
                         </div>
 
                         <div className="space-y-2">
                             <label htmlFor="email" className="text-sm font-bold text-slate-700">Correo Electrónico</label>
-                            <Input id="email" type="email" placeholder="nombre@empresa.com" required className="bg-slate-50 border-slate-200" />
+                            <Input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="nombre@empresa.com"
+                                required
+                                className="bg-slate-50 border-slate-200"
+                            />
                         </div>
 
                         <div className="space-y-2">
                             <label htmlFor="message" className="text-sm font-bold text-slate-700">Mensaje</label>
                             <Textarea
                                 id="message"
+                                name="message"
                                 placeholder="Hola, me gustaría cotizar 50 camisolas..."
                                 rows={4}
                                 required
@@ -116,13 +180,23 @@ export function ContactSection() {
                             />
                         </div>
 
-                        <Button type="submit" className="w-full text-base h-12" disabled={status === 'success' || status === 'sending'}>
+                        <Button
+                            type="submit"
+                            className="w-full text-base h-12"
+                            disabled={status === 'sending'}
+                        >
                             {status === 'sending' ? 'Enviando...' : status === 'success' ? '¡Mensaje Enviado!' : 'Enviar Mensaje'}
                         </Button>
 
                         {status === 'success' && (
                             <p className="text-green-600 text-center text-sm font-medium animate-in fade-in">
-                                Hemos recibido tu mensaje. Te contactaremos pronto.
+                                ✓ Hemos recibido tu mensaje. Te contactaremos pronto.
+                            </p>
+                        )}
+
+                        {status === 'error' && (
+                            <p className="text-red-600 text-center text-sm font-medium animate-in fade-in">
+                                ✗ {errorMessage || 'Error al enviar el mensaje. Por favor intenta de nuevo.'}
                             </p>
                         )}
                     </form>

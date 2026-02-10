@@ -19,6 +19,7 @@ export interface SiteConfig {
     linkedin_url?: string;
     twitter_url?: string;
     campaign_url?: string;
+    tiktok_url?: string;
 }
 
 export interface SiteImage {
@@ -54,6 +55,7 @@ const defaultConfig: SiteConfig = {
     instagram_url: '',
     linkedin_url: '',
     twitter_url: '',
+    tiktok_url: '',
     campaign_url: '/catalogo'
 };
 

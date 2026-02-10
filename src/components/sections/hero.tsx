@@ -14,9 +14,7 @@ export function Hero() {
 
     // Filter hero images
     const heroImages = images.filter(img => img.section === 'hero');
-    const displayImages = heroImages.length > 0 ? heroImages : [
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop", alt: "Industrial Background" }
-    ];
+    const displayImages = heroImages;
 
     useEffect(() => {
         if (displayImages.length <= 1) return;
@@ -31,17 +29,19 @@ export function Hero() {
             {/* Dynamic Background Carousel */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-900/60 z-10" />
-                <AnimatePresence mode="popLayout">
-                    <motion.div
-                        key={currentImageIndex}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.4 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1 }}
-                        className="absolute inset-0 h-full w-full bg-cover bg-center"
-                        style={{ backgroundImage: `url('${displayImages[currentImageIndex].url}')` }}
-                    />
-                </AnimatePresence>
+                {displayImages.length > 0 && (
+                    <AnimatePresence mode="popLayout">
+                        <motion.div
+                            key={currentImageIndex}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 0.4 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 1 }}
+                            className="absolute inset-0 h-full w-full bg-cover bg-center"
+                            style={{ backgroundImage: `url('${displayImages[currentImageIndex].url}')` }}
+                        />
+                    </AnimatePresence>
+                )}
             </div>
 
             <div className="container relative z-10 px-4 md:px-6 mx-auto">
@@ -58,9 +58,9 @@ export function Hero() {
                             <span className="tracking-wide uppercase">{config.company_slogan || 'Ingeniería Textil Industrial'}</span>
                         </div>
 
-                        <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl xl:text-7xl/none">
+                        <h1 className="text-4xl font-black tracking-tight text-slate-100 sm:text-5xl xl:text-7xl/none">
                             Checa nuestra <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-slate-200">
                                 Nueva Campaña
                             </span>
                         </h1>
@@ -76,9 +76,9 @@ export function Hero() {
                                     <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
                             </Link>
-                            <Link href="/catalogo">
+                            <Link href="/catalogos">
                                 <Button variant="outline" size="lg" className="h-14 px-8 text-base border-slate-700 text-white hover:bg-slate-800 hover:text-white backdrop-blur-sm bg-white/5">
-                                    Ver Catálogo 2026
+                                    Ver Catálogos 2026
                                 </Button>
                             </Link>
                         </div>
@@ -115,21 +115,26 @@ export function Hero() {
                             <div className="relative z-10 rounded-sm overflow-hidden shadow-2xl border border-slate-800 bg-slate-900">
                                 {(() => {
                                     const sideImage = images.find(img => img.section === 'hero-side');
-                                    const imageToUse = sideImage || {
-                                        url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
-                                        alt: "Industrial Worker"
-                                    };
+
+                                    if (!sideImage) {
+                                        return (
+                                            <div className="w-full aspect-[4/3] bg-slate-900 flex items-center justify-center border-2 border-slate-800 border-dashed">
+                                                <div className="text-center p-6">
+                                                    <Factory className="h-16 w-16 text-slate-700 mx-auto mb-4" />
+                                                    <p className="text-slate-500 text-sm">Sin imagen configurada</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
 
                                     return (
                                         <div className="block relative group overflow-hidden">
                                             <Image
-                                                src={imageToUse.url}
-                                                alt={imageToUse.alt}
-                                                width={0}
-                                                height={0}
-                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                src={sideImage.url}
+                                                alt={sideImage.alt}
+                                                width={800}
+                                                height={600}
                                                 className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
-                                                style={{ width: '100%', height: 'auto' }}
                                                 priority
                                             />
                                             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />

@@ -23,11 +23,13 @@ type ConfigState = {
     quote_email: string;
     quote_whatsapp: string;
     whatsapp_message: string;
+    form_recipient_email: string;
     facebook_url?: string;
     instagram_url?: string;
     linkedin_url?: string;
     twitter_url?: string;
     campaign_url?: string;
+    tiktok_url?: string;
 };
 
 const initialConfig: ConfigState = {
@@ -41,10 +43,12 @@ const initialConfig: ConfigState = {
     quote_email: '',
     quote_whatsapp: '',
     whatsapp_message: '',
+    form_recipient_email: '',
     facebook_url: '',
     instagram_url: '',
     linkedin_url: '',
     twitter_url: '',
+    tiktok_url: '',
     campaign_url: ''
 };
 
@@ -203,6 +207,30 @@ export default function ConfigPage() {
                                     />
                                 </div>
                             </div>
+
+                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg space-y-3">
+                                <div className="flex items-start gap-2">
+                                    <div className="mt-0.5">
+                                        <svg className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="text-sm font-semibold text-blue-900 mb-1">Email para Formulario de Contacto</h4>
+                                        <p className="text-xs text-blue-700 mb-3">
+                                            Los mensajes del formulario de contacto se enviarán a este correo. Déjalo vacío si solo quieres guardar los mensajes en la base de datos.
+                                        </p>
+                                        <Input
+                                            type="email"
+                                            value={config.form_recipient_email}
+                                            onChange={(e) => handleChange('form_recipient_email', e.target.value)}
+                                            placeholder="formularios@bultex.com"
+                                            className="bg-white"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Dirección Física</label>
                                 <Input
@@ -298,6 +326,14 @@ export default function ConfigPage() {
                                     value={config.twitter_url || ''}
                                     onChange={(e) => handleChange('twitter_url', e.target.value)}
                                     placeholder="https://twitter.com/bultex"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">TikTok URL</label>
+                                <Input
+                                    value={config.tiktok_url || ''}
+                                    onChange={(e) => handleChange('tiktok_url', e.target.value)}
+                                    placeholder="https://tiktok.com/@bultex"
                                 />
                             </div>
                         </CardContent>

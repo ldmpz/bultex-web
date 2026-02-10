@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Package, LogOut, Menu, FolderTree, Settings, Users, Image as ImageIcon } from "lucide-react";
+import { LayoutDashboard, Package, LogOut, Menu, FolderTree, Settings, Users, Image as ImageIcon, FileText } from "lucide-react";
 
 export default function AdminLayout({
     children,
@@ -74,6 +74,12 @@ export default function AdminLayout({
                         <Button variant="ghost" className={`w-full justify-start gap-3 ${!sidebarOpen && "justify-center px-2"}`}>
                             <FolderTree className="h-5 w-5 text-slate-500" />
                             {sidebarOpen && <span className="text-slate-700">Categorías</span>}
+                        </Button>
+                    </Link>
+                    <Link href="/admin/catalogos">
+                        <Button variant="ghost" className={`w-full justify-start gap-3 ${!sidebarOpen && "justify-center px-2"}`}>
+                            <FileText className="h-5 w-5 text-slate-500" />
+                            {sidebarOpen && <span className="text-slate-700">Catálogos</span>}
                         </Button>
                     </Link>
                     <Link href="/admin/usuarios">

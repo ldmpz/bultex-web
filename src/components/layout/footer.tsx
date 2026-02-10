@@ -76,6 +76,21 @@ export function Footer() {
                                     <Twitter className="h-6 w-6" />
                                 </Link>
                             )}
+                            {config.tiktok_url && (
+                                <Link href={config.tiktok_url} target="_blank" className="hover:text-blue-400 transition-colors">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="h-6 w-6"
+                                    >
+                                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                                    </svg>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
