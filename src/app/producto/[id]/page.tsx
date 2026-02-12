@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 type Props = {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 
 export async function generateMetadata(
     { params }: Props,
     parent: ResolvingMetadata
 ): Promise<Metadata> {
-    const id = params.id
+    const { id } = await params;
 
     const { data: product } = await supabase
         .from('products')
@@ -37,7 +37,7 @@ export async function generateMetadata(
 }
 
 export default async function ProductPage({ params }: Props) {
-    const { id } = params;
+    const { id } = await params;
 
     const { data, error } = await supabase
         .from('products')
