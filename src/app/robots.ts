@@ -1,13 +1,13 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bultex-web.vercel.app'
+    const baseUrl = 'https://www.bultex.com.mx'
 
     return {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: '/admin/', // Protect admin routes from crawling
+            disallow: ['/api/', '/admin/'],
         },
         sitemap: `${baseUrl}/sitemap.xml`,
     }

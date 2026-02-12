@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: Props) {
         return (
             <div className="container py-24 text-center">
                 <h1 className="text-2xl font-bold mb-4">Producto no encontrado</h1>
-                <Link href="/catalogo">
+                <Link href="/productos">
                     <Button>Volver al Catálogo</Button>
                 </Link>
             </div>
@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: Props) {
             price: product.price,
             priceCurrency: 'MXN',
             availability: 'https://schema.org/InStock',
-            url: `https://bultex-web.vercel.app/producto/${product.id}`,
+            url: `https://www.bultex.com.mx/producto/${product.id}`,
         },
     }
 

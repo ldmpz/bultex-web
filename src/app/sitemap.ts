@@ -1,9 +1,9 @@
 import { MetadataRoute } from 'next'
 import { supabase } from '@/lib/supabase'
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bultex-web.vercel.app'
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const baseUrl = 'https://www.bultex.com.mx'
+
     // Fetch products for dynamic routes
     const { data: products } = await supabase
         .from('products')
@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const productEntries: MetadataRoute.Sitemap = (products || []).map((product) => ({
         url: `${baseUrl}/producto/${product.id}`,
-        lastModified: new Date(product.created_at),
+        lastModified: new Date(product.created_at || new Date().toISOString()),
         changeFrequency: 'weekly',
         priority: 0.8,
     }))
@@ -24,10 +24,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 1,
         },
         {
-            url: `${baseUrl}/catalogo`,
+            url: `${baseUrl}/productos`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/catalogos`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
         },
         {
             url: `${baseUrl}/nosotros`,
